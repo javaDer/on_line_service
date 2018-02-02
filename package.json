@@ -10,8 +10,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "element-ui": "^2.1.0",
     "mint-ui": "^2.2.13",
     "vue": "^2.5.2",
+    "vue-area-linkage": "^1.2.6",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
