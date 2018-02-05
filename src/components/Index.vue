@@ -24,9 +24,11 @@
 
 </template>
 <script>
+  import * as qs from "qs";
+
   export default {
     name: 'index',
-    data(){
+    data() {
       return {
         username: '',
         phone: '',
@@ -323,13 +325,7 @@
       }
     },
     methods: {
-      handleClick(){
-        console.log('submit!');
-        console.log(this.phone);
-        console.log(this.type);
-        console.log(this.address[0] + this.address[1] + this.address[2]);
-        console.log(this.time);
-        console.log(this.username);
+      handleClick() {
         if (this.phone === '' || this.phone === null) {
           this.toast("联系方式不能为空")
         } else if (this.type.length === 0) {
@@ -339,22 +335,35 @@
         } else if (this.username === '' || this.username === null) {
           this.toast("维修业主不能为空")
         }
-        this.$ajax({
-          method: 'post',
-          url: '/api/save',
-          data: {
+        var data_par = {
+          username: this.username,
+          type: this.type[0] + this.type[1],
+          phone: this.phone,
+          address: this.address[0] + this.address[1] + this.address[2],
+        }
+        // this.$ajax({
+        //   method: 'get',
+        //   url: '/api/save',
+        //   data: qs.stringify(data_par)
+        // }).then(function (response) {
+        //   console.log(response)
+        // }).catch(function (response) {
+        //
+        // })
+        this.$ajax.get('/api/save', {
+          params: {
             username: this.username,
             type: this.type[0] + this.type[1],
             phone: this.phone,
             address: this.address[0] + this.address[1] + this.address[2],
           }
         }).then(function (response) {
-          console.log(response)
+          console.log(response);
         }).catch(function (response) {
-
-        })
+            console.log(response);
+          });
       },
-      handleItemChange(val){
+      handleItemChange(val) {
         console.log(val);
       },
       toast(msg) {

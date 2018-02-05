@@ -8,7 +8,7 @@ import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
-axios.defaults.baseURL = 'http://192.168.1.4:5000/';
+axios.defaults.baseURL = 'http://127.0.0.1:5000/';
 axios.defaults.headers.post['content-Type'] = 'appliction/x-www-form-urlencoded';
 Vue.prototype.$ajax = axios;
 Vue.use(MintUI);
