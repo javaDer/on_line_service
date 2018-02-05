@@ -7,6 +7,10 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import axios from 'axios'
+axios.defaults.baseURL = 'http://192.168.1.4:5000/';
+axios.defaults.headers.post['content-Type'] = 'appliction/x-www-form-urlencoded';
+Vue.prototype.$ajax = axios;
 Vue.use(MintUI);
 Vue.use(ElementUI);
 Vue.config.productionTip = false;

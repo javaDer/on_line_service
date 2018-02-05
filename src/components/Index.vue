@@ -13,10 +13,11 @@
                       placeholder="维修时间"></el-time-select>
     </mt-cell>
     <mt-cell class="mint-cell mint-field" title="维修类型">
-      <el-cascader :options="options" change-on-select></el-cascader>
+      <el-cascader :options="options" v-model="type" @active-item-change="handleItemChange"
+                   change-on-select></el-cascader>
     </mt-cell>
     <mt-cell class="mint-cell mint-field" title="维修地点">
-      <el-cascader :options="options2" change-on-select></el-cascader>
+      <el-cascader :options="options2" v-model="address" change-on-select></el-cascader>
     </mt-cell>
     <mt-button @click.native="handleClick" type="primary" class="sumbit_save" size="large">提交</mt-button>
   </div>
@@ -31,12 +32,13 @@
         phone: '',
         number: '',
         time: '',
-        selected: 'axure',
+        type: [],
+        address: [],
         options: [{
           value: '物业维修',
           label: '维修',
           children: [{
-            value: 'shuidian',
+            value: '水电维修',
             label: '水电维修'
           }, {
             value: 'jijian',
@@ -323,6 +325,43 @@
     methods: {
       handleClick(){
         console.log('submit!');
+        console.log(this.phone);
+        console.log(this.type);
+        console.log(this.address[0] + this.address[1] + this.address[2]);
+        console.log(this.time);
+        console.log(this.username);
+        if (this.phone === '' || this.phone === null) {
+          this.toast("联系方式不能为空")
+        } else if (this.type.length === 0) {
+          this.toast("维修类型不能为空")
+        } else if (this.address.length === 0) {
+          this.toast("维修地点不能为空")
+        } else if (this.username === '' || this.username === null) {
+          this.toast("维修业主不能为空")
+        }
+        this.$ajax({
+          method: 'post',
+          url: '/api/save',
+          data: {
+            username: this.username,
+            type: this.type[0] + this.type[1],
+            phone: this.phone,
+            address: this.address[0] + this.address[1] + this.address[2],
+          }
+        }).then(function (response) {
+          console.log(response)
+        }).catch(function (response) {
+
+        })
+      },
+      handleItemChange(val){
+        console.log(val);
+      },
+      toast(msg) {
+        this.$message({
+          message: msg,
+          type: 'warning'
+        });
       }
     }
 
